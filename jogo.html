@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <title>Day 1 | Emilly Moura</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <script>
+             
+            var canvas, ctx, ALTURA, LARGURA, frames=0, maxpulos = 3,
+
+            // inicializa o jogo
+            ALTURA = window.innerHeight;
+            LARGURA = window.innerWidth;
+
+                if(LARGURA >= 500){
+                    LARGURA=600;
+                    ALTURA=600;
+                }
+
+            chao ={
+                y: 550,
+                altura: 50,
+                cor: "#ffdf70",
+
+                desenha: function(){
+                ctx.fillStyle = this.cor;
+                ctx.fillRect(0, this.y, LARGURA, this.altura);
+                    }
+            };
+
+            bloco ={
+                x: 50,
+                y: 0,
+                altura:50,
+                largura: 50,
+                cor: "#ff4e4e",
+                gravidade: 1,
+                velocidade:0,
+                forcaDoPulo: 20,
+                qntPulos:0,
+                avanço: 15,
+
+                /*atualiza: function(){                    
+                    this.velocidade += this.gravidade;
+                    this.y += this.velocidade;
+
+                    if (this.y > chao.y - this.altura){
+                        this.y = chao.y - this.altura
+                        this.qntPulos = 0;
+                    } 
+                },*/
+
+                /* pula:function(){
+                    if (this.qntPulos < maxpulos){
+                        this.velocidade =- this.forcaDoPulo;
+                        this.qntPulos++;
+                    }
+                },*/
+
+                direita:function(){
+                    if ( this.x < (LARGURA - this.largura)){
+                        this.x = this.x + this.avanço;
+                    }
+                },
+
+                esquerda:function(){
+                    if (this.x >= this.avanço){
+                        this.x = this.x - this.avanço;
+                    }
+                },
+
+                frente:function(){
+                    
+                    this.y = this.y + this.avanço;
+                    
+                },
+                
+                tras:function(){
+                    this.y = this.y - this.avanço;
+                },
+
+                desenha: function(){
+                    ctx.fillStyle = this.cor;
+                    ctx.fillRect(this.x, this.y, this.largura, this.altura);
+                }
+
+            };
+
+            function clique(event){
+                event = event || window.event;
+                var tecla = event.Keycode || event.which;
+
+                if (tecla == 32){
+                    //bloco.pula();
+
+                }else if(tecla == 37){
+                    bloco.esquerda();
+
+                } else if (tecla == 39){
+                    bloco.direita();
+
+                } else if (tecla == 38){
+                    bloco.frente();
+
+                } else if (tecla == 40){
+                    bloco.tras();
+                }
+            }
+            
+
+            function roda(){
+                // atualizando e desenhando o jogo
+                atualiza();
+                desenha();
+                
+                 window.requestAnimationFrame(roda);
+
+            }
+
+            function atualiza(){
+
+                // atualizar status do personagem
+                frames++;
+                //bloco.atualiza();
+                
+            }
+            
+            function desenha(){
+
+                // desenha personagens e cenário
+                ctx.fillStyle = "#50beff";
+                ctx.fillRect(0,0,LARGURA,ALTURA);
+                chao.desenha();
+                bloco.desenha();
+            }
+
+            function main (){
+               
+                
+
+                canvas = document.createElement("canvas");
+                canvas.width=LARGURA;
+                canvas.height=ALTURA;
+                canvas.style.border= "1px solid #3d3d3d";
+                ctx= canvas.getContext("2d");
+                document.body.appendChild(canvas);
+
+                document.addEventListener("keydown", clique);
+                roda();
+                  
+                
+            }
+           
+            main();
+        </script>
+    </body>
+</html>
