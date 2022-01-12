@@ -33,7 +33,7 @@
             };
             
             chao ={
-                y: 650,
+                y: 550,
                 altura: 50,
                 cor: "#ffdf70",
 
@@ -45,7 +45,7 @@
 
             bloco ={
                 x: 150,
-                y: 650,
+                y: 550,
                 altura:50,
                 largura: 50,
                 cor: "#000000",
@@ -88,7 +88,7 @@
                 },
                 
                 reset: function(){
-                this.y = 650;
+                this.y = 550;
                 this.x = 150;        
                 this.score = 0;
                 if (this.score > record){
@@ -149,7 +149,7 @@
                             bloco.x + bloco.largura > obj.x - obj.largura &&
                             
                             bloco.x < obj.x &&
-                            obj.y + obj.altura > 650                                                                                                           
+                            obj.y + obj.altura > 550                                                                                                           
                         ){                                                 
                             estadoAtual = estados.perdeu      
                         }                  
@@ -313,7 +313,7 @@
 
                 if(LARGURA >= 500){
                     LARGURA=400;
-                    ALTURA=700;
+                    ALTURA=600;
                 }
 
                 canvas = document.createElement("canvas");
