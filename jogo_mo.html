@@ -13,29 +13,37 @@
                 bottom: 0px;
                 left: 0px;
                 right: 0px;
-                margin: auto;
+                margin:  auto;
+                
 
             }
         </style>
         
     </head>
-    <body>
+    <body bgcolor="#000000">
         <script>
              
             var canvas, ctx, ALTURA, LARGURA, frames=0, maxpulos = 3, record, img,
 
             estadoAtual,
 
+            landing_page = {
+                
+            };
+
+
+
             estados = {
                 jogar: 0,
                 jogando: 1,
                 perdeu: 2,
+                inicio:4,
             };
             
             chao ={
-                y: 650,
+                y: 550,
                 altura: 50,
-                cor: "#ffdf70",
+                cor: "#000000",
 
                 desenha: function(){
                 ctx.fillStyle = this.cor;
@@ -45,7 +53,7 @@
 
             bloco ={
                 x: 150,
-                y: 650,
+                y: 550,
                 altura:50,
                 largura: 50,
                 cor: "#000000",
@@ -88,7 +96,7 @@
                 },
                 
                 reset: function(){
-                this.y = 650;
+                this.y = 550;
                 this.x = 150;        
                 this.score = 0;
                 if (this.score > record){
@@ -102,18 +110,23 @@
             alvos = {
                 _obj: [],
                 cores: ["#C0C0C0","#00FF00","#B8860B","#D2691E","#FF00FF"],
+                //p:[0.1,0.2,0.3,0.4,0.5],
+                _sprites: [durdo_money,durdo_love,durdo_fire,durdo_x],
                 tempoInsere:0,
                 velocidade: 2,
 
                 insere: function(){
+                    //p: Math.random();
                     this._obj.push({
                     y: 0,
                     
-                    largura: 30 + Math.floor(100*Math.random()),
-                    altura: 30 + Math.floor(100*Math.random()),
-                    x:20+ Math.floor(LARGURA*Math.random()),
-                    
-                    cor :this.cores[Math.floor(5*Math.random())]
+                    //largura: 30 + Math.floor(100*Math.random()),
+                    //altura: 30 + Math.floor(100*Math.random()),
+                    largura:250,
+                    altura:250,
+                    x:Math.floor(LARGURA*Math.random()),                    
+                    sprite:this._sprites[Math.floor(this._sprites.length*Math.random())],
+                    cor: this.cores[Math.floor(this.cores.length*Math.random())]
                     });
                     
                     // here we can set durdo's speed :)
@@ -141,15 +154,11 @@
                         var obj = this._obj[i];
                                                 
                         obj.y += this.velocidade
-                    
-                        console.log(this.tempoInsere)
-                    
-
+                                          
                         if (
-                            bloco.x + bloco.largura > obj.x - obj.largura &&
-                            
+                            bloco.x + bloco.largura > obj.x - obj.largura &&                            
                             bloco.x < obj.x &&
-                            obj.y + obj.altura > 650                                                                                                           
+                            obj.y + obj.altura > 550                                                                                                           
                         ){                                                 
                             estadoAtual = estados.perdeu      
                         }                  
@@ -200,6 +209,9 @@
                         var obj = this._obj[i]
                         ctx.fillStyle = obj.cor;
                         ctx.fillRect(obj.x - obj.largura,obj.y,obj.largura,obj.altura);
+
+                        //obj.sprite.desenha(obj.x,obj.y)
+                        //durdo.desenha(this.largura,this.altura)
                     }
                 }
             };
@@ -261,7 +273,7 @@
             function desenha(){
 
                 // desenha personagens e cenário
-                ctx.fillStyle = "#50beff";
+                ctx.fillStyle = "#000000";
                 ctx.fillRect(0,0,LARGURA,ALTURA);
 
                 ctx.fillStyle = "#fff";
@@ -313,14 +325,14 @@
 
                 if(LARGURA >= 500){
                     LARGURA=400;
-                    ALTURA=700;
+                    ALTURA=600;
                 }
 
                 canvas = document.createElement("canvas");
                 canvas.width=LARGURA;
                 canvas.height=ALTURA;
                 
-                canvas.style.border= "1px solid #3d3d3d";
+                canvas.style.border= "1px solid #FF0000";
                 ctx= canvas.getContext("2d");
                 document.body.appendChild(canvas);
 
@@ -332,8 +344,12 @@
                 if (record == null){
                     record = 0;
                 }
-                img = new Image();
-                img.src = "imagens/sheet.png"
+                img_pilon = new Image();
+                img_pilon.src = "imagens/pilon.png"
+
+                img_durdo = new Image();
+                img_durdo.src = "imagens/durdo.png"
+
                 roda();
                   
                 
